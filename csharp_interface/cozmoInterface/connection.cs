@@ -287,7 +287,7 @@ namespace Anki
         // @TODO: Send message "wrong version" - check python SDK
         if (!message.toGameCLADHash.SequenceEqual(MessageEngineToGameHash._Data))
         {
-          SendMessage(new ExternalInterface.UiDeviceConnectionWrongVersion(reserved: 0, connectionType: message.connectionType, deviceID: message.deviceID, buildVersion: Anki.Cozmo.Version.Clad));
+          SendMessage(new ExternalInterface.UiDeviceConnectionWrongVersion(reserved: 0, connectionType: message.connectionType, deviceID: message.deviceID, buildVersion: Anki.Cozmo.CladVersion._Data));
           throw new System.Exception("CladMismatchEngineToGame - Engine's hash (" +
                System.BitConverter.ToString(message.toGameCLADHash) + ") != UI's (" +
                System.BitConverter.ToString(MessageEngineToGameHash._Data) + ")");
@@ -295,7 +295,7 @@ namespace Anki
 
         if (!message.toEngineCLADHash.SequenceEqual(MessageGameToEngineHash._Data))
         {
-          SendMessage(new ExternalInterface.UiDeviceConnectionWrongVersion(reserved: 0, connectionType: message.connectionType, deviceID: message.deviceID, buildVersion: Anki.Cozmo.Version.Clad));
+          SendMessage(new ExternalInterface.UiDeviceConnectionWrongVersion(reserved: 0, connectionType: message.connectionType, deviceID: message.deviceID, buildVersion: Anki.Cozmo.CladVersion._Data));
           throw new System.Exception("CladMismatchGameToEngine - Engine's hash (" +
                System.BitConverter.ToString(message.toEngineCLADHash) + ") != UI's (" +
                System.BitConverter.ToString(MessageGameToEngineHash._Data) + ")");
@@ -303,8 +303,8 @@ namespace Anki
 
         SendMessage(new ExternalInterface.UiDeviceConnectionSuccess(connectionType: message.connectionType, 
                                                                     deviceID: message.deviceID, 
-                                                                    buildVersion: Anki.Cozmo.Version.Clad,
-                                                                    sdkModuleVersion: Anki.Cozmo.Version.Interface,
+                                                                    buildVersion: Anki.Cozmo.CladVersion._Data,
+                                                                    sdkModuleVersion: Anki.Cozmo.SDKVersion._Data,
                                                                     pythonVersion: "CSharp",
                                                                     pythonImplementation: "CSharp",
                                                                     osVersion: "?",

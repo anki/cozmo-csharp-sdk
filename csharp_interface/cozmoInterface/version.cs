@@ -18,9 +18,9 @@ namespace Anki
 {
   namespace Cozmo
   {
-    public static partial class Version
+    public static class SDKVersion
     {
-      public readonly string Interface = "0.1.0";
+      public static readonly string _Data = "0.1.0";
     }
   } // namespace Cozmo
 } // namespace Anki

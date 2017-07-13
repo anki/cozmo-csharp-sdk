@@ -23,6 +23,7 @@
 //
 
 using System.Collections.Generic;
+using System.Threading;
 
 public class SampleApp
 {
@@ -48,8 +49,10 @@ public class SampleApp
     Anki.Cozmo.ExternalInterface.RequestAvailableAnimations message = new Anki.Cozmo.ExternalInterface.RequestAvailableAnimations();
     _connection.SendMessage( message );
 
-    Anki.Cozmo.BlockUntilCondition blocker = new Anki.Cozmo.BlockUntilCondition(() => finished);
-    blocker.Block();
+    while (!finished)
+    {
+      Thread.Sleep(5);
+    }
 
     // unregister for messages
     _connection.RemoveCallback<Anki.Cozmo.ExternalInterface.AnimationAvailable>(this);
