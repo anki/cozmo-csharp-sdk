@@ -20,7 +20,7 @@ namespace Anki
   {
     public static partial class Version
     {
-      public readonly string Interface = "0.0.0"
+      public readonly string Interface = "0.1.0";
     }
   } // namespace Cozmo
 } // namespace Anki
