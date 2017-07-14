@@ -17,7 +17,7 @@ Forums: https://forums.anki.com/
 
 
 
-The included project can be built on macOS via Xamarin Studio, or on Windows via Visual Studio. This project is a very small sample application which demonstrates how to send an action to Cozmo, and how to register for specific callbacks to receive incoming messages.  Other messages can be found by browsing the CladCSharp.dll assembly, and can be send and listened for using a similar approach.
+The included project can be built on macOS via Xamarin Studio, or on Windows via Visual Studio. This project is a very small sample application which demonstrates how to send an action to Cozmo, and how to register for specific callbacks to receive incoming messages.  Other messages can be found by browsing the CladCSharp.dll assembly, and can be sent and received using a similar approach.
 
 To connect to the Cozmo app running on your mobile device, you will need to plug in the device via a USB cable, and also set up port forwarding for TCP port 5106 to go over the USB cable.
 
