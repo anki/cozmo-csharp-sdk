@@ -32,7 +32,7 @@
     <Compile Include="cozmoInterface\connection.cs" />
     <Compile Include="cozmoInterface\message.cs" />
     <Compile Include="cozmoInterface\action.cs" />
-    <Compile Include="cozmoInterface\blockUntilCondition.cs" />
+    <Compile Include="cozmoInterface\version.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
