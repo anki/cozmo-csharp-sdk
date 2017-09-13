@@ -20,7 +20,7 @@ namespace Anki
   {
     public class Action
     {
-      private Connection _connection = null;
+      private SdkConnection _connection = null;
       private ExternalInterface.QueueSingleAction _message = null;
       private byte _robotId = 0;
       private uint _id = 0;
@@ -31,7 +31,7 @@ namespace Anki
       public uint ID { get { return _id; } }
       public ExternalInterface.QueueSingleAction Message { get { return _message; } }
 
-      public Action(Connection connection, byte robotId)
+      public Action(SdkConnection connection, byte robotId)
       {
         _connection = connection;
         _robotId = robotId;

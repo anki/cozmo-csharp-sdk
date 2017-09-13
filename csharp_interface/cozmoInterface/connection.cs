@@ -24,7 +24,7 @@ namespace Anki
 {
   namespace Cozmo
   {
-    public class Connection
+    public class SdkConnection
     {
       public UiConnectionType SDKConnectionType = UiConnectionType.SdkOverTcp;
 
@@ -32,7 +32,7 @@ namespace Anki
 
       private IPEndPoint _endPoint = null;
       private Socket _socket = null;
-      private bool _verboseLogging = false; 
+      private bool _verboseLogging = false;
       private Thread _listenThread = null;
       private bool _shutdownSignal = false;
       private Dictionary<System.Type, Dictionary<object, iCallback>> _callbacks = new Dictionary<System.Type, Dictionary<object, iCallback>>();
@@ -42,7 +42,7 @@ namespace Anki
 
       public byte CurrentRobotId { get { return _currentRobotId; } }
 
-      public Connection(string ip, int socket, bool verboseLogging = false)
+      public SdkConnection(string ip, int socket, bool verboseLogging = false)
       {
         _verboseLogging = verboseLogging;
 
@@ -85,7 +85,7 @@ namespace Anki
 
       public Action SendAction<T>(T state, int numRetries = 0, bool inParallel = false)
       {
-        Action result = new Action( this, _currentRobotId );
+        Action result = new Action(this, _currentRobotId);
         result.Initialize(state, numRetries, inParallel);
 
         _inFlightActions.Add(result);
@@ -156,7 +156,7 @@ namespace Anki
 
         // does this give us a robot id?
         string robotIDPropertyName = "robotID";
-        if (_currentRobotId == byte.MaxValue && messageData.GetType().GetProperty(robotIDPropertyName) != null )
+        if (_currentRobotId == byte.MaxValue && messageData.GetType().GetProperty(robotIDPropertyName) != null)
         {
           uint robotId = (uint)messageData.GetType().GetProperty(robotIDPropertyName).GetValue(messageData, null);
           _currentRobotId = (byte)robotId;
@@ -301,15 +301,15 @@ namespace Anki
                System.BitConverter.ToString(MessageGameToEngineHash._Data) + ")");
         }
 
-        SendMessage(new ExternalInterface.UiDeviceConnectionSuccess(connectionType: message.connectionType, 
-                                                                    deviceID: message.deviceID, 
+        SendMessage(new ExternalInterface.UiDeviceConnectionSuccess(connectionType: message.connectionType,
+                                                                    deviceID: message.deviceID,
                                                                     buildVersion: Anki.Cozmo.CladVersion._Data,
                                                                     sdkModuleVersion: Anki.Cozmo.SDKVersion._Data,
                                                                     pythonVersion: "CSharp",
                                                                     pythonImplementation: "CSharp",
                                                                     osVersion: "?",
                                                                     cpuVersion: "?"));
-        
+
         System.Console.WriteLine("Connected to Cozmo App");
       }
 
