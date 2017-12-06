@@ -20,9 +20,8 @@ namespace Anki
   {
     public class Action
     {
-      private Connection _connection = null;
+      private SDKConnection _connection = null;
       private ExternalInterface.QueueSingleAction _message = null;
-      private byte _robotId = 0;
       private uint _id = 0;
       private bool _completed = false;
 
@@ -31,10 +30,9 @@ namespace Anki
       public uint ID { get { return _id; } }
       public ExternalInterface.QueueSingleAction Message { get { return _message; } }
 
-      public Action(Connection connection, byte robotId)
+      public Action(SDKConnection connection)
       {
         _connection = connection;
-        _robotId = robotId;
 
         _id = _nextActionId;
         _nextActionId++;
@@ -46,7 +44,7 @@ namespace Anki
 
       public void Abort()
       {
-        _connection.SendMessage(new ExternalInterface.CancelActionByIdTag(_id, _robotId));
+        _connection.SendMessage(new ExternalInterface.CancelActionByIdTag(_id));
       }
 
       public void MarkAsComplete()
@@ -67,7 +65,7 @@ namespace Anki
         Cozmo.QueueActionPosition position = inParallel ? Cozmo.QueueActionPosition.IN_PARALLEL : Cozmo.QueueActionPosition.NOW;
         ExternalInterface.RobotActionUnion action = new ExternalInterface.RobotActionUnion();
         action.Initialize(state);
-        _message = new ExternalInterface.QueueSingleAction(robotID: _robotId, idTag: _id, numRetries: (byte)numRetries, position: position, action: action);
+        _message = new ExternalInterface.QueueSingleAction(idTag: _id, numRetries: (byte)numRetries, position: position, action: action);
       }
     }
   } // namespace Cozmo

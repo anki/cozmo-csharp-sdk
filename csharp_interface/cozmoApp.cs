@@ -30,7 +30,7 @@ public class SampleApp
   public const string kTargetIP = "127.0.0.1";
   public const int kTargetPort = 5106;
 
-  private Anki.Cozmo.Connection _connection;
+  private Anki.Cozmo.SDKConnection _connection;
   private List<string> _supportedAnimations = new List<string>();
 
   private void OnAnimationAvailable(Anki.Cozmo.ExternalInterface.AnimationAvailable message)
@@ -44,10 +44,10 @@ public class SampleApp
     _supportedAnimations.Clear();
     bool finished = false;
     _connection.AddCallback<Anki.Cozmo.ExternalInterface.AnimationAvailable>(this, OnAnimationAvailable);
-    _connection.AddCallback<Anki.Cozmo.ExternalInterface.EndOfMessage>(this, msg => finished = true );
+    _connection.AddCallback<Anki.Cozmo.ExternalInterface.EndOfMessage>(this, msg => finished = true);
 
     Anki.Cozmo.ExternalInterface.RequestAvailableAnimations message = new Anki.Cozmo.ExternalInterface.RequestAvailableAnimations();
-    _connection.SendMessage( message );
+    _connection.SendMessage(message);
 
     while (!finished)
     {
@@ -71,7 +71,7 @@ public class SampleApp
 
   public void Execute()
   {
-    _connection = new Anki.Cozmo.Connection(kTargetIP, kTargetPort);
+    _connection = new Anki.Cozmo.SDKConnection(kTargetIP, kTargetPort);
 
     RequestSupportedAnimations();
     System.Console.WriteLine("Cozmo can perform " + _supportedAnimations.Count.ToString() + " animations");

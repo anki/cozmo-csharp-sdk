@@ -24,7 +24,7 @@ namespace Anki
 {
   namespace Cozmo
   {
-    public class Connection
+    public class SDKConnection
     {
       public UiConnectionType SDKConnectionType = UiConnectionType.SdkOverTcp;
 
@@ -32,17 +32,15 @@ namespace Anki
 
       private IPEndPoint _endPoint = null;
       private Socket _socket = null;
-      private bool _verboseLogging = false; 
+      private bool _verboseLogging = false;
       private Thread _listenThread = null;
       private bool _shutdownSignal = false;
       private Dictionary<System.Type, Dictionary<object, iCallback>> _callbacks = new Dictionary<System.Type, Dictionary<object, iCallback>>();
       private List<Action> _inFlightActions = new List<Action>();
       private bool _open = false;
-      private byte _currentRobotId = byte.MaxValue;
+      private bool _robotIsConnected = false;
 
-      public byte CurrentRobotId { get { return _currentRobotId; } }
-
-      public Connection(string ip, int socket, bool verboseLogging = false)
+      public SDKConnection(string ip, int socket, bool verboseLogging = false)
       {
         _verboseLogging = verboseLogging;
 
@@ -62,7 +60,7 @@ namespace Anki
         _open = true;
 
         // wait for robot
-        while (_currentRobotId == byte.MaxValue)
+        while (!_robotIsConnected)
         {
           Thread.Sleep(5);
         }
@@ -85,7 +83,7 @@ namespace Anki
 
       public Action SendAction<T>(T state, int numRetries = 0, bool inParallel = false)
       {
-        Action result = new Action( this, _currentRobotId );
+        Action result = new Action(this);
         result.Initialize(state, numRetries, inParallel);
 
         _inFlightActions.Add(result);
@@ -136,7 +134,6 @@ namespace Anki
       private void ReceiveMessage(SDKMessageIn messageIn)
       {
         var message = messageIn.Message;
-
         if (_verboseLogging) { System.Console.WriteLine("Recieved Message - " + message.GetTag()); }
 
         // since the property to access individual message data in a CLAD message shares its name
@@ -154,13 +151,10 @@ namespace Anki
           }
         }
 
-        // does this give us a robot id?
-        string robotIDPropertyName = "robotID";
-        if (_currentRobotId == byte.MaxValue && messageData.GetType().GetProperty(robotIDPropertyName) != null )
+        if (!_robotIsConnected && message.GetTag() == Anki.Cozmo.ExternalInterface.MessageEngineToGame.Tag.RobotState)
         {
-          uint robotId = (uint)messageData.GetType().GetProperty(robotIDPropertyName).GetValue(messageData, null);
-          _currentRobotId = (byte)robotId;
-          System.Console.WriteLine("Robot connected with id " + _currentRobotId.ToString());
+          _robotIsConnected = true;
+          System.Console.WriteLine("Robot connected!");
         }
       }
 
@@ -301,15 +295,15 @@ namespace Anki
                System.BitConverter.ToString(MessageGameToEngineHash._Data) + ")");
         }
 
-        SendMessage(new ExternalInterface.UiDeviceConnectionSuccess(connectionType: message.connectionType, 
-                                                                    deviceID: message.deviceID, 
+        SendMessage(new ExternalInterface.UiDeviceConnectionSuccess(connectionType: message.connectionType,
+                                                                    deviceID: message.deviceID,
                                                                     buildVersion: Anki.Cozmo.CladVersion._Data,
                                                                     sdkModuleVersion: Anki.Cozmo.SDKVersion._Data,
                                                                     pythonVersion: "CSharp",
                                                                     pythonImplementation: "CSharp",
                                                                     osVersion: "?",
                                                                     cpuVersion: "?"));
-        
+
         System.Console.WriteLine("Connected to Cozmo App");
       }
 
