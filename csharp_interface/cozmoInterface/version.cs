@@ -20,7 +20,7 @@ namespace Anki
   {
     public static class SDKVersion
     {
-      public static readonly string _Data = "0.1.0";
+      public static readonly string _Data = "0.4.0";
     }
   } // namespace Cozmo
 } // namespace Anki
