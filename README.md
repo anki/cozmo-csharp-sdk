@@ -1,9 +1,9 @@
 # cozmo-csharp-sdk
 Anki Cozmo C# SDK Interface
 
-Unlike the Cozmo Python SDK - https://github.com/anki/cozmo-python-sdk - the C# SDK is not actively maintained by Anki, and is instead meant as starting point for anyone who wishes to build their own C# SDK for interacting with Cozmo.
+**Please note that updates to this C# SDK interface are indefinitely on hold. Current users can continue to use it, though must remain on version 3.0 of the Cozmo mobile app.**
 
-We will release an updated CladCSharp.dll for each subsequent release of the Cozmo app, so that you don't need to worry about the binary format of the messages when they're sent over the network.
+Unlike the Cozmo Python SDK - https://github.com/anki/cozmo-python-sdk - the C# SDK is not actively maintained by Anki, and is instead meant as starting point for anyone who wishes to build their own C# SDK for interacting with Cozmo.
 
 The Cozmo Python SDK GitHub repo: https://github.com/anki/cozmo-python-sdk
 
