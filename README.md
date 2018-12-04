@@ -3,7 +3,7 @@ Anki Cozmo C# SDK Interface
 
 **Please note that updates to this C# SDK interface are indefinitely on hold. Current users can continue to use it, though must remain on version 3.0 of the Cozmo mobile app.**
 
-Unlike the Cozmo Python SDK - https://github.com/anki/cozmo-python-sdk - the C# SDK is not actively maintained by Anki, and is instead meant as starting point for anyone who wishes to build their own C# SDK for interacting with Cozmo.
+Unlike the Cozmo Python SDK - https://github.com/anki/cozmo-python-sdk - the C# SDK is not actively maintained by Anki, and is instead meant as a starting point for anyone who wishes to build their own C# SDK for interacting with Cozmo.
 
 The Cozmo Python SDK GitHub repo: https://github.com/anki/cozmo-python-sdk
 
